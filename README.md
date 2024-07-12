@@ -6,3 +6,4 @@ Proyecto para la clase de Ambiente Web Cliente / Servidor
 - Jeffry Samuel Eduarte Rojas
 - Kevin Javier Soto Bolaños
 - Mairin María Chaves López 
+-Jenipher Arce Monestel
