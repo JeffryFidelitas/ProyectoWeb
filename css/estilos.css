@@ -116,7 +116,7 @@ p {
   background-color: #fff;
   border-radius: 5px;
   text-align: center;
-  max-width: 40%;
+  max-width: 30vmax; /*Jeffry: era 40% pero mejor usar vmax para que se adpate a pantallas verticales (celulares)*/
   box-sizing: border-box; /* Asegura que el padding y border se incluyan en el ancho y alto */
 }
 
@@ -143,7 +143,6 @@ footer {
   color: white;
   left: 0;
   bottom: 0;
-  height: 20px;
   width: 100%;
   padding: 10px;
 }
