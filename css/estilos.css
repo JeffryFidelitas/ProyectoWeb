@@ -1,5 +1,5 @@
 body {
-  font-family: 'Times New Roman', sans-serif;
+  font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f4f4f4;
@@ -10,13 +10,11 @@ header {
   color: #fff;
   padding: 15px 0;
   text-align: center;
-  
 }
 
 header h1 {
   margin: 0;
   padding: 15px 0;
-
 }
 
 nav ul {
@@ -40,6 +38,42 @@ nav ul li a:hover {
   background-color: #f2c94c;
 }
 
+.nav-buttons {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.nav-buttons .btn {
+  margin-left: 10px;
+  padding: 5px 10px;
+  border-radius: 3px;
+  text-decoration: none;
+  color: #2C5F2D;
+  border: 1px solid #FFFFFF;
+}
+
+.nav-buttons .btn-outline-light {
+  background-color: transparent;
+  color: #ffffff;
+}
+
+.nav-buttons .btn-outline-light:hover {
+  background-color: #f2c94c;
+  color: #2C5F2D;
+  border-color: #f2c94c;
+}
+
+.nav-buttons .btn-light {
+  background-color: #ffffff;
+  color: #2C5F2D;
+}
+
+.nav-buttons .btn-light:hover {
+  background-color: #f2c94c;
+  color: #2C5F2D;
+  border-color: #f2c94c;
+}
+
 main {
   padding: 20px;
 }
@@ -54,12 +88,10 @@ section {
 h2 {
   color: #020202;
   text-align: center;
-
 }
 
 p {
   color: #000000;
-  
 }
 
 .services {
@@ -98,14 +130,91 @@ p {
 .service-box p {
   color: #666;
 }
-footer{
+
+footer {
   text-align: center;
   position: fixed;
   background-color: black;
-  color:white;
+  color: white;
   left: 0;
- bottom: 0;
-     height: 20px;
-
+  bottom: 0;
+  height: 20px;
   width: 100%;
+}
+
+.footer {
+  text-align: center;
+  padding: 1rem 0;
+  background-color: #f8f9fa;
+}
+
+.footer .nav-menu {
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.footer p {
+  margin: 0;
+  color: #6c757d;
+}
+
+.card {
+  border: 1px solid #A67B5B;
+}
+
+.card-title {
+  color: #2C5F2D;
+}
+
+.card-text {
+  color: #2C5F2D;
+}
+
+.btn-primary {
+  background-color: #2C5F2D;
+  border-color: #2C5F2D;
+}
+
+.btn-outline-secondary {
+  color: #A67B5B;
+  border-color: #A67B5B;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #A67B5B;
+  color: #FFFFFF;
+}
+
+.container {
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.card-img-top {
+  height: 150px;
+  object-fit: cover;
+}
+
+.modal-header {
+  background-color: #8ABF76;
+  color: #FFFFFF;
+}
+
+.modal-footer {
+  background-color: #F5EEDC;
+}
+
+.btn-floating {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
 }
