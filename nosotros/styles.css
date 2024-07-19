@@ -2,11 +2,9 @@
 
 /* Cuerpo de la página */
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: #F5EEDC; /* Fondo de la página */
     color: #333; /* Texto principal */
 }
 
