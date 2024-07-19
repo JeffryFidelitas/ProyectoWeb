@@ -12,13 +12,6 @@ body {
 
 /* Encabezado */
 header {
-    background: #2C5F2D; /* Color del encabezado */
-    color: #F5EEDC; /* Color del texto del encabezado */
-    padding: 10px 20px;
-    text-align: center;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     animation: headerSlideIn 1s ease-out; /* Animación de entrada del encabezado */
 }
 
@@ -216,30 +209,6 @@ form button {
 form button:hover {
     transform: scale(1.05); /* Aumenta el tamaño del botón ligeramente al pasar el ratón por encima */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Añade sombra al pasar el ratón */
-}
-
-/* Pie de página */
-footer {
-    background: #8ABF76;
-    text-align: center;
-    padding: 10px 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    color: #F5EEDC;
-    animation: bounce 1s infinite; /* Agrega un efecto de rebote */
-}
-
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-    }
-    40% {
-        transform: translateY(-4px);
-    }
-    60% {
-        transform: translateY(-2px);
-    }
 }
 
 /* Estilos para el chatbot */
