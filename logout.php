@@ -1,7 +1,13 @@
 <?php
-session_start();
+session_start(); // Start the session
+
+// Unset all session variables
 session_unset();
+
+// Destroy the session
 session_destroy();
-header('Location: http://localhost/ProyectoWeb-main/ProyectoWeb-main/'); 
-exit;
+
+// Redirect to the login and registration page
+header("Location: index.php");
+exit();
 ?>
