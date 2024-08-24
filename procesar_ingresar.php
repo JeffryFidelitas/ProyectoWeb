@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             session_start();
             $_SESSION["usuario"] = $usuario;
             $_SESSION["role"] = $row["role"];
-            echo "Session iniciada <br>";
+            header('Location: ./index.php');
         } else {
             echo "Contrasena incorrecta<br>";
         }
