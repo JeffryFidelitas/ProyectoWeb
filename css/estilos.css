@@ -293,3 +293,8 @@ a#carrito:hover {
   background-color: #333;
   color: white;
 }
+.message {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+}

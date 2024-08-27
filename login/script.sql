@@ -6,5 +6,6 @@ CREATE TABLE usuarios (
   role ENUM('user', 'admin') DEFAULT 'user' NOT NULL
 );
 
+
 INSERT INTO `usuarios` (`email`, `password`, `name`, `role`) VALUES
 ('admin@email.com', '$2y$10$d6POOPxvzXHrTHBT./UyAe.bZFH90l1ZWDpfZZ7i7mCZEY5DejzNq', 'Admin', 'admin');
