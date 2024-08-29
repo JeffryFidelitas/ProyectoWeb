@@ -1,44 +1,38 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-include("db.php");
-echo "DB included<br>";
+session_start();
+include("config/db/db.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    echo "<br>";
     $usuario = $_POST["usuario"] ?? '';
     $clave = $_POST["clave"] ?? '';
-    echo "User: $usuario<br>";
 
     if (empty($usuario) || empty($clave)) {
-        die("error");
+        $_SESSION['message'] = "Por favor, ingrese ambos campos.";
+        header('Location: ingresar.php');
+        exit();
     }
 
-    $stmt = $conn->prepare("SELECT * FROM usuario WHERE email = ?");
+    $stmt = $conn->prepare("SELECT * FROM usuarios WHERE email = ?");
     $stmt->bind_param("s", $usuario);
-    echo "<br>";
-
     $stmt->execute();
-    echo "<br>";
-
     $result = $stmt->get_result();
-    echo "<br>";
 
     if ($result->num_rows > 0) {
-        echo "<br>";
         $row = $result->fetch_assoc();
         if (password_verify($clave, $row["password"])) {
-            echo "verified<br>";
-            session_start();
             $_SESSION["usuario"] = $usuario;
             $_SESSION["role"] = $row["role"];
-            header('Location: ./index.php');
+            header('Location: index.php');
+            exit();
         } else {
-            echo "Contrasena incorrecta<br>";
+            $_SESSION['message'] = "Contraseña incorrecta.";
+            header('Location: ingresar.php');
+            exit();
         }
     } else {
-        echo "No existe el usuario<br>";
+        $_SESSION['message'] = "No existe el usuario.";
+        header('Location: ingresar.php');
+        exit();
     }
 
     $stmt->close();
