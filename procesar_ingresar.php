@@ -21,6 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $row = $result->fetch_assoc();
         if (password_verify($clave, $row["password"])) {
             $_SESSION["usuario"] = $usuario;
+            $_SESSION["usuario_id"] = $row["id"];
             $_SESSION["role"] = $row["role"];
             header('Location: index.php');
             exit();
@@ -38,4 +39,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->close();
     $conn->close();
 }
-?>

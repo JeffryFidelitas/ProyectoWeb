@@ -24,17 +24,16 @@
             </ul>
 
             <div class="nav-buttons">
-    <?php if ($isLoggedIn): ?>
-        <?php if ($_SESSION['role'] == 'admin'): ?>
-            <a class="btn btn-outline-light" href="index">Admin Dashboard</a>
-        <?php endif; ?>
-        <a class="btn btn-outline-light" href="logout.php">Cerrar Sesión</a>
-    <?php else: ?>
-        <a class="btn btn-outline-light" href="ingresar.php">Iniciar Sesión</a>
-        <a class="btn btn-light" href="registro.php">Registrarte</a>
-    <?php endif; ?>
-</div>
-
+                <?php if ($isLoggedIn): ?>
+                    <?php if ($_SESSION['role'] == 'admin'): ?>
+                        <a class="btn btn-outline-light" href="index">Admin Dashboard</a>
+                    <?php endif; ?>
+                    <a class="btn btn-outline-light" href="logout.php">Cerrar Sesión</a>
+                <?php else: ?>
+                    <a class="btn btn-outline-light" href="ingresar.php">Iniciar Sesión</a>
+                    <a class="btn btn-light" href="registro.php">Registrarte</a>
+                    <?php endif; ?>
+                </div>
         </nav>
     </header>
 

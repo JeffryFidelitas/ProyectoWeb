@@ -3,7 +3,7 @@ CREATE TABLE usuarios (
   email VARCHAR(50) NOT NULL,
   password VARCHAR(100) NOT NULL,
   name VARCHAR(50) NOT NULL,
-  role ENUM('user', 'admin') DEFAULT 'user' NOT NULL
+  role ENUM('user', 'admin', 'productor') DEFAULT 'user' NOT NULL
 );
 
 

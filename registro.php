@@ -62,6 +62,16 @@
                         <label class="form-label" for="name">Nombre Completo</label>
                     </div>
 
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <label for="role" class="form-label">Selecciona tu rol</label>
+                        <select id="role" name="role" class="form-control" required>
+                            <option value="user">Comprador</option>
+                            <option value="productor">Productor</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+
                     <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">Registrarse</button>
 
                     <div class="text-center">

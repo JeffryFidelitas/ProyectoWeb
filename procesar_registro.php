@@ -5,6 +5,7 @@ include("config/db/db.php");
 $email = $_POST['email'];
 $password = $_POST['password'];
 $name = $_POST['name'];
+$role = $_POST['role'];
 
 if (empty($email) || empty($password) || empty($name)) {
     $_SESSION['message'] = "Todos los campos son obligatorios.";
@@ -23,7 +24,7 @@ if ($result_check->num_rows > 0) {
 
 $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
-$sql = "INSERT INTO usuarios (email, password, name) VALUES ('$email', '$hashed_password', '$name')";
+$sql = "INSERT INTO usuarios (email, password, name, role) VALUES ('$email', '$hashed_password', '$name', '$role')";
 
 if ($conn->query($sql) === TRUE) {
     $_SESSION['message'] = "Registro exitoso. Puedes iniciar sesión ahora.";
@@ -36,4 +37,3 @@ if ($conn->query($sql) === TRUE) {
 }
 
 $conn->close();
-?>
