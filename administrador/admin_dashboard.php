@@ -7,7 +7,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['role'] != 'admin') {
 
 require_once '../config/db/db.php';
 
-$query = "SELECT id, name, email FROM usuarios ORDER BY id";
+$query = "SELECT id, name, email, role FROM usuarios ORDER BY id";
 $result = $conn->query($query);
 ?>
 
@@ -41,6 +41,7 @@ $result = $conn->query($query);
                             <th>ID Usuario</th>
                             <th>Nombre</th>
                             <th>Email</th>
+                            <th>Rol</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -50,6 +51,7 @@ $result = $conn->query($query);
                                 <td><?php echo $row['id']; ?></td>
                                 <td><?php echo $row['name']; ?></td>
                                 <td><?php echo $row['email']; ?></td>
+                                <td><?php echo $row['role']; ?></td>
                                 <td>
                                     <a class="btn btn-view-invoices" href="ver_facturas.php?user_id=<?php echo $row['id']; ?>">Ver Facturas</a>
                                 </td>
