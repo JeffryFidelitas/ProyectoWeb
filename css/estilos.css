@@ -284,8 +284,13 @@ div#acciones-carrito {
 }
 div#acciones-carrito > h1 {
   flex-grow: 1;
+}
+div#carrito-container > h1 {
   color: white;
   margin: 0;
+}
+div#acciones-carrito > button {
+  padding: 0 20px;
 }
 
 a#carrito {
@@ -304,4 +309,8 @@ a#carrito:hover {
   color: red;
   font-weight: bold;
   text-align: center;
+}
+
+#facturarModal .modal-body {
+  background-color: white;
 }

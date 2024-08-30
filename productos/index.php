@@ -16,10 +16,10 @@ if (!$isLoggedIn) {
 }
 
 // Consulta para obtener todos los productos
-$sql_productos = "SELECT p.id, p.nombre, p.descripcion, p.precio, p.cantidad_disponible, p.foto, p.disponible, u.name AS productor 
+$sql_productos = "SELECT p.id, p.nombre, p.descripcion, p.precio, p.cantidad_disponible, p.foto, u.name AS productor 
                   FROM productos p 
                   JOIN usuarios u ON p.id_productor = u.id
-                  WHERE p.disponible = 1";
+                  WHERE p.cantidad_disponible > 0";
 
 $result = $conn->query($sql_productos);
 
@@ -35,6 +35,7 @@ $result = $conn->query($sql_productos);
     <link rel="stylesheet" href="../css/estilos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
 </head>
 <body>
 <header class="header" style="background-color: #2c5f2c;">
@@ -92,15 +93,15 @@ $result = $conn->query($sql_productos);
                     <p class="card-text"><?php echo $row['descripcion']; ?></p>
                     <p class="card-text">Precio por kg: ₡<?php echo $row['precio']; ?></p>
                     <div class="d-flex flex-column">
-                        <form action="agregar_al_carrito.php" method="POST" class="mb-3">
+                        <form class="mb-3">
                             <input type="hidden" name="id_producto" value="<?php echo $row['id']; ?>">
                             <div class="input-group mb-2">
                                 <input type="number" name="cantidad" min="0.5" step="0.5" class="form-control" placeholder="Cantidad (kg)" required>
                             </div>
-                            <div class="d-flex justify-content-between">
-                                <button class="btn btn-primary btn-block" type="submit">Agregar al carrito</button>
-                            </div>
                         </form>
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-primary btn-block" onclick="agregar_al_carrito(this)">Agregar al carrito</button>
+                        </div>
                         <?php if ($isLoggedIn && ($usuarioRol == 'admin' || $usuarioRol == 'productor')): ?>
                         <div class="btn-group mt-2">
                             <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#editarProductoModal" data-id="<?php echo $row['id']; ?>" data-nombre="<?php echo $row['nombre']; ?>" data-descripcion="<?php echo $row['descripcion']; ?>" data-precio="<?php echo $row['precio']; ?>" data-cantidad="<?php echo $row['cantidad_disponible']; ?>"><i class="fa fa-pencil"></i> Editar</button>
