@@ -20,12 +20,7 @@
                 <li><a href="nosotros">Nosotros</a></li>
                 <li><a href="productos">Productos</a></li>
                 <li><a href="servicios">Servicios</a></li>
-                <li><a href="nosotros#contacto">Contacto</a></li>
-
-                <?php if ($isLoggedIn): ?>
-                    <li><a href="facturas.php">Facturas</a></li>
-                <?php endif; ?>
-                
+                <li><a href="nosotros#contacto">Contacto</a></li>              
             </ul>
 
             <div class="nav-buttons">
@@ -33,6 +28,7 @@
                     <?php if ($_SESSION['role'] == 'admin'): ?>
                         <a class="btn btn-outline-light" href="administrador/admin_dashboard.php">Admin Dashboard</a>
                     <?php endif; ?>
+                    <a class="btn btn-outline-light mx-2" href="perfil">Perfil</a>
                     <a class="btn btn-outline-light" href="logout.php">Cerrar Sesión</a>
                 <?php else: ?>
                     <a class="btn btn-outline-light" href="ingresar.php">Iniciar Sesión</a>

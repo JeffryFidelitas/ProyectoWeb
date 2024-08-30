@@ -353,3 +353,20 @@ th {
 .btn-view-invoices:hover {
   background-color: #1d3c1d;
 }
+
+div#perfil-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: fit-content;
+}
+
+div#perfil-container > span {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+div#perfil-container > span > b {
+  flex-grow: 1;
+}

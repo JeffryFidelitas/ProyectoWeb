@@ -65,7 +65,7 @@ $result = $conn->query($sql_productos);
                 </ul>
                 <div class="d-flex">
                     <?php if ($isLoggedIn): ?>
-                        <a class="btn btn-outline-light mx-2" href="../perfil.php">Perfil</a>
+                        <a class="btn btn-outline-light mx-2" href="../perfil">Perfil</a>
                         <a class="btn btn-light mx-2" href="../logout.php">Cerrar Sesión</a>
                     <?php else: ?>
                         <a class="btn btn-outline-light mx-2" href="../ingresar.php">Iniciar Sesión</a>
