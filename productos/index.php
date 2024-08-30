@@ -19,7 +19,7 @@ if (!$isLoggedIn) {
 $sql_productos = "SELECT p.id, p.nombre, p.descripcion, p.precio, p.cantidad_disponible, p.foto, u.name AS productor 
                   FROM productos p 
                   JOIN usuarios u ON p.id_productor = u.id
-                  WHERE p.cantidad_disponible > 1";
+                  WHERE p.disponible = 1";
 
 $result = $conn->query($sql_productos);
 
