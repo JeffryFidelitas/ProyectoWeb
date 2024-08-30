@@ -1,3 +1,7 @@
+<?php
+    session_start(); 
+    $isLoggedIn = isset($_SESSION['usuario']);
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -37,8 +41,13 @@
                         </li>
                     </ul>
                     <div class="d-flex">
-                        <a class="btn btn-outline-light mx-2" href="../login">Iniciar Sesión</a>
-                        <a class="btn btn-light mx-2" href="#">Registrarte</a>
+                        <?php if ($isLoggedIn): ?>
+                            <a class="btn btn-outline-light mx-2" href="../perfil.php">Perfil</a>
+                            <a class="btn btn-light mx-2" href="../logout.php">Cerrar Sesión</a>
+                        <?php else: ?>
+                            <a class="btn btn-outline-light mx-2" href="../ingresar.php">Iniciar Sesión</a>
+                            <a class="btn btn-light mx-2" href="../registro.php">Registrarte</a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

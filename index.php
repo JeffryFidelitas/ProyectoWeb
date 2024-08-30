@@ -38,7 +38,7 @@
                     <a class="btn btn-outline-light" href="ingresar.php">Iniciar Sesión</a>
                     <a class="btn btn-light" href="registro.php">Registrarte</a>
                     <?php endif; ?>
-                </div>
+            </div>
         </nav>
     </header>
 
