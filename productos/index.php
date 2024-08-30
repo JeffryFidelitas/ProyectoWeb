@@ -4,10 +4,14 @@ session_start();
 include("../config/db/db.php");
 
 // Verificar si el usuario está autenticado
-$isLoggedIn = isset($_SESSION['usuario']);
+$isLoggedIn = isset($_SESSION['usuario_id']);
 $usuarioRol = $_SESSION['role'] ?? '';
 $accion = $_POST['accion'] ?? '';
+$usuarioId = $_SESSION['usuario_id'] ?? '';
 $mensaje = $_SESSION['mensaje'] ?? ''; // Obtener mensaje
+
+// Registrar el ID del usuario para depuración en la consola del navegador
+echo "<script>console.log('ID del usuario: " . $usuarioId . "');</script>";
 
 if (!$isLoggedIn) {
     $_SESSION['mensaje'] = 'Debes iniciar sesión para acceder a esta página.';
@@ -15,15 +19,28 @@ if (!$isLoggedIn) {
     exit();
 }
 
-// Consulta para obtener todos los productos
-$sql_productos = "SELECT p.id, p.nombre, p.descripcion, p.precio, p.cantidad_disponible, p.foto, u.name AS productor 
-                  FROM productos p 
-                  JOIN usuarios u ON p.id_productor = u.id
-                  WHERE p.disponible = 1";
+if ($usuarioRol === 'productor') {
+    // Si es productor, obtiene todos sus productos, estén activos o no
+    $sql_productos = "SELECT p.id, p.nombre, p.descripcion, p.precio, p.cantidad_disponible, p.foto, p.activo, u.name AS productor 
+                      FROM productos p 
+                      JOIN usuarios u ON p.id_productor = u.id
+                      WHERE p.id_productor = '$usuarioId'";
+    
 
+} else {
+    // Si es un usuario común o admin, solo muestra los productos activos de todos los productores
+    $sql_productos = "SELECT p.id, p.nombre, p.descripcion, p.precio, p.cantidad_disponible, p.foto, u.name AS productor 
+                      FROM productos p 
+                      JOIN usuarios u ON p.id_productor = u.id
+                      WHERE p.activo = 1";
+}
+
+// Ejecutar la consulta y verificar resultados
 $result = $conn->query($sql_productos);
 
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -81,39 +98,64 @@ $result = $conn->query($sql_productos);
     <h2 class="text-center">Productos del Mercado Orgánico</h2>
     <p class="text-center">Nuestros productos son de agricultores costarricenses comprometidos con la producción sostenible y orgánica. Descubre la variedad de productos frescos y saludables que ofrecemos.</p>
     <a href="../carrito" id="carrito">🛒 Carrito</a>
+
+    <!-- Barra Busqueda -->
+    <div class="d-flex justify-content-end mb-3">
+        <input type="text" id="searchInput" class="form-control" placeholder="Buscar productos..." style="width: 300px;">
+    </div>
+
+
     <div class="row" id="productos">
-    <?php while($row = $result->fetch_assoc()): ?>
-        <div class="col-md-4 mb-4"> <!-- Separación entre tarjetas -->
-            <div class="card shadow-sm">
-                <!-- Cargar imagen como base64 -->
-                <img src="<?php echo $row['foto']; ?>" class="card-img-top" alt="<?php echo $row['nombre']; ?>">
-                <div class="card-body">
-                    <h5 class="card-title"><?php echo $row['nombre']; ?></h5>
-                    <p class="card-text">Proveedor: <?php echo $row['productor']; ?></p>
-                    <p class="card-text"><?php echo $row['descripcion']; ?></p>
-                    <p class="card-text">Precio por kg: ₡<?php echo $row['precio']; ?></p>
-                    <div class="d-flex flex-column">
-                        <form class="mb-3">
-                            <input type="hidden" name="id_producto" value="<?php echo $row['id']; ?>">
-                            <div class="input-group mb-2">
-                                <input type="number" name="cantidad" min="0.5" step="0.5" class="form-control" placeholder="Cantidad (kg)" required>
-                            </div>
-                        </form>
-                        <div class="d-flex justify-content-between">
-                            <button class="btn btn-primary btn-block" onclick="agregar_al_carrito(this)">Agregar al carrito</button>
-                        </div>
-                        <?php if ($isLoggedIn && ($usuarioRol == 'admin' || $usuarioRol == 'productor')): ?>
-                        <div class="btn-group mt-2">
-                            <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#editarProductoModal" data-id="<?php echo $row['id']; ?>" data-nombre="<?php echo $row['nombre']; ?>" data-descripcion="<?php echo $row['descripcion']; ?>" data-precio="<?php echo $row['precio']; ?>" data-cantidad="<?php echo $row['cantidad_disponible']; ?>"><i class="fa fa-pencil"></i> Editar</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#eliminarProductoModal" data-id="<?php echo $row['id']; ?>"><i class="fa fa-trash"></i> Eliminar</button>
-                        </div>
+    <?php if ($result && $result->num_rows > 0): ?>
+        <?php while($row = $result->fetch_assoc()): ?>
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm">
+                    <!-- Cargar imagen -->
+                    <img src="<?php echo $row['foto']; ?>" class="card-img-top" alt="<?php echo htmlspecialchars($row['nombre']); ?>">
+                    <div class="card-body">
+                        <!-- Título del producto en negrita -->
+                        <h5 class="card-title"><strong><?php echo htmlspecialchars($row['nombre']); ?></strong></h5>
+                        <p class="card-text"><strong>Proveedor:</strong> <?php echo htmlspecialchars($row['productor']); ?></p>
+                        <p class="card-text">
+                            <strong>Descripción:</strong> 
+                            <?php echo htmlspecialchars($row['descripcion']); ?>
+                        </p>
+                        <p class="card-text"><strong>Precio por kg:</strong> ₡<?php echo htmlspecialchars($row['precio']); ?></p>
+
+                        <?php if ($usuarioRol === 'productor'): ?>
+                            <p class="card-text">
+                                <strong>Estado:</strong> 
+                                <?php echo $row['activo'] ? 'Activo' : 'Inactivo'; ?>
+                            </p>
                         <?php endif; ?>
+                        
+                        <div class="d-flex flex-column">
+                            <?php if ($usuarioRol === 'user'): ?>
+                                <form class="mb-3">
+                                    <input type="hidden" name="id_producto" value="<?php echo $row['id']; ?>">
+                                    <div class="input-group mb-2">
+                                        <input type="number" name="cantidad" min="0.5" step="0.5" class="form-control" placeholder="Cantidad (kg)" required>
+                                    </div>
+                                    <button class="btn btn-primary btn-block" onclick="agregar_al_carrito(this)">Agregar al carrito</button>
+                                </form>
+                            <?php endif; ?>
+                            
+                            <?php if ($isLoggedIn && ($usuarioRol == 'admin' || $usuarioRol == 'productor')): ?>
+                                <div class="btn-group mt-2">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#editarProductoModal" data-id="<?php echo $row['id']; ?>" data-nombre="<?php echo htmlspecialchars($row['nombre']); ?>" data-descripcion="<?php echo htmlspecialchars($row['descripcion']); ?>" data-precio="<?php echo htmlspecialchars($row['precio']); ?>" data-cantidad="<?php echo htmlspecialchars($row['cantidad_disponible']); ?>"><i class="fa fa-pencil"></i> Editar</button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#eliminarProductoModal" data-id="<?php echo $row['id']; ?>"><i class="fa fa-trash"></i> Eliminar</button>
+                                </div>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         <?php endwhile; ?>
-    </div>
+    <?php else: ?>
+        <p>No se encontraron productos.</p>
+    <?php endif; ?>
+</div>
+
 
     <!-- Botón flotante para agregar productos -->
     <?php if ($isLoggedIn && ($usuarioRol == 'admin' || $usuarioRol == 'productor')): ?>
@@ -153,8 +195,8 @@ $result = $conn->query($sql_productos);
                             <input type="file" class="form-control-file" id="fotoProducto" name="foto" required>
                         </div>
                         <div class="form-group form-check">
-                            <input type="checkbox" class="form-check-input" id="disponibleProducto" name="disponible" checked>
-                            <label class="form-check-label" for="disponibleProducto">Disponible</label>
+                            <input type="checkbox" class="form-check-input" id="activoProducto" name="activo" checked>
+                            <label class="form-check-label" for="activoProducto">Activo</label>
                         </div>
                         <button type="submit" class="btn btn-success">Agregar</button>
                     </form>
@@ -195,8 +237,8 @@ $result = $conn->query($sql_productos);
                             <input type="file" class="form-control-file" id="editarFotoProducto" name="foto">
                         </div>
                         <div class="form-group form-check">
-                            <input type="checkbox" class="form-check-input" id="editarDisponibleProducto" name="disponible">
-                            <label class="form-check-label" for="editarDisponibleProducto">Disponible</label>
+                            <input type="checkbox" class="form-check-input" id="editarActivoProducto" name="activo">
+                            <label class="form-check-label" for="editarActivoProducto">Activo</label>
                         </div>
                         <button type="submit" class="btn btn-success">Guardar Cambios</button>
                     </form>
@@ -231,7 +273,7 @@ $result = $conn->query($sql_productos);
 </html>
 
 <footer> 
-        &copy; 2024 Orgánico CR. Todos los derechos reservados. 
+    &copy; 2024 Orgánico CR. Todos los derechos reservados. 
 </footer>
 
 <script>
@@ -249,6 +291,7 @@ $result = $conn->query($sql_productos);
         modal.find('textarea[name="descripcion"]').val(descripcion);
         modal.find('input[name="precio"]').val(precio);
         modal.find('input[name="cantidad_disponible"]').val(cantidad);
+        modal.find('input[name="activo"]').prop('checked', button.data('activo') === 1);
     });
 
     // Cargar datos en el modal de eliminación
@@ -307,7 +350,24 @@ $result = $conn->query($sql_productos);
             }
         });
     });
+
+    document.getElementById('searchInput').addEventListener('input', function() {
+    var searchQuery = this.value.toLowerCase();
+    var productCards = document.querySelectorAll('#productos .col-md-4');
+
+    productCards.forEach(function(card) {
+        var productName = card.querySelector('.card-title').textContent.toLowerCase();
+        if (productName.includes(searchQuery)) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+    });
+
 </script>
+
+
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

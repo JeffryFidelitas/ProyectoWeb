@@ -7,7 +7,7 @@ $username = "root";
 $password = ""; //Cambien esto segun sus contraseñas
 $database = "organicocr";
 
-$conn = new mysqli($servername, $username, $password, $database); //Cambien el puerto según lo que use su compu
+$conn = new mysqli($servername, $username, $password, $database, 3307); //Cambien el puerto según lo que use su compu
 
 // Verificar la conexión y que no salga en pantalla 
 if ($conn->connect_error) {

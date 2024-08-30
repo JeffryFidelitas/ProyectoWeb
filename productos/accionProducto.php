@@ -20,7 +20,7 @@ switch ($accion) {
         $descripcion = $_POST['descripcion'];
         $precio = $_POST['precio'];
         $cantidad_disponible = $_POST['cantidad_disponible'];
-        $disponible = isset($_POST['disponible']) ? 1 : 0;
+        $activo = isset($_POST['activo']) ? 1 : 0;
     
         // Manejo de imagen y conversión a base64
         $foto_base64 = '';
@@ -33,8 +33,8 @@ switch ($accion) {
             die(json_encode(["estado" => "error", "mensaje" => "No se ha proporcionado una imagen."]));
         }
     
-        $sql = "INSERT INTO productos (nombre, descripcion, precio, cantidad_disponible, foto, disponible, id_productor) 
-                VALUES ('$nombre', '$descripcion', '$precio', '$cantidad_disponible', '$foto_base64', '$disponible', '$_SESSION[usuario_id]')";
+        $sql = "INSERT INTO productos (nombre, descripcion, precio, cantidad_disponible, foto, activo, id_productor) 
+                VALUES ('$nombre', '$descripcion', '$precio', '$cantidad_disponible', '$foto_base64', '$activo', '$_SESSION[usuario_id]')";
     
         if ($conn->query($sql) === TRUE) {
             echo json_encode(["estado" => "éxito", "mensaje" => "Producto agregado correctamente."]);
@@ -43,44 +43,46 @@ switch ($accion) {
         }
         break;
     
-
-        case 'actualizar':
-            $id_producto = $_POST['id'];
-            $nombre = $_POST['nombre'] ?? null;
-            $descripcion = $_POST['descripcion'] ?? null;
-            $precio = $_POST['precio'] ?? null;
-            $cantidad_disponible = $_POST['cantidad_disponible'] ?? null;
-            $disponible = isset($_POST['disponible']) ? 1 : 0;
+    case 'actualizar':
+        $id_producto = $_POST['id'];
+        $nombre = $_POST['nombre'] ?? null;
+        $descripcion = $_POST['descripcion'] ?? null;
+        $precio = $_POST['precio'] ?? null;
+        $cantidad_disponible = $_POST['cantidad_disponible'] ?? null;
+        $activo = isset($_POST['activo']) ? 1 : 0;
     
-            // Verificar si se subió una nueva imagen
-            if (!empty($_FILES['foto']['name'])) {
-                $foto = file_get_contents($_FILES['foto']['tmp_name']);
-                $foto_base64 = base64_encode($foto);
+        // Verificar si se subió una nueva imagen y manejarla igual que en 'crear'
+        if (!empty($_FILES['foto']['tmp_name'])) {
+            $foto_info = getimagesize($_FILES['foto']['tmp_name']);
+            $foto_tipo = $foto_info['mime'];
+            $foto_contenido = file_get_contents($_FILES['foto']['tmp_name']);
+            $foto_base64 = 'data:' . $foto_tipo . ';base64,' . base64_encode($foto_contenido);
     
-                $sql = "UPDATE productos SET 
-                        nombre = IFNULL('$nombre', nombre), 
-                        descripcion = IFNULL('$descripcion', descripcion), 
-                        precio = IFNULL('$precio', precio), 
-                        cantidad_disponible = IFNULL('$cantidad_disponible', cantidad_disponible), 
-                        disponible = '$disponible',
-                        foto = '$foto_base64' 
-                        WHERE id = '$id_producto'";
-            } else {
-                $sql = "UPDATE productos SET 
-                        nombre = IFNULL('$nombre', nombre), 
-                        descripcion = IFNULL('$descripcion', descripcion), 
-                        precio = IFNULL('$precio', precio), 
-                        cantidad_disponible = IFNULL('$cantidad_disponible', cantidad_disponible), 
-                        disponible = '$disponible'
-                        WHERE id = '$id_producto'";
-            }
+            $sql = "UPDATE productos SET 
+                    nombre = IFNULL('$nombre', nombre), 
+                    descripcion = IFNULL('$descripcion', descripcion), 
+                    precio = IFNULL('$precio', precio), 
+                    cantidad_disponible = IFNULL('$cantidad_disponible', cantidad_disponible), 
+                    activo = '$activo',
+                    foto = '$foto_base64' 
+                    WHERE id = '$id_producto'";
+        } else {
+            $sql = "UPDATE productos SET 
+                    nombre = IFNULL('$nombre', nombre), 
+                    descripcion = IFNULL('$descripcion', descripcion), 
+                    precio = IFNULL('$precio', precio), 
+                    cantidad_disponible = IFNULL('$cantidad_disponible', cantidad_disponible), 
+                    activo = '$activo'
+                    WHERE id = '$id_producto'";
+        }
     
-            if ($conn->query($sql) === TRUE) {
-                echo json_encode(["estado" => "éxito", "mensaje" => "Producto actualizado correctamente."]);
-            } else {
-                echo json_encode(["estado" => "error", "mensaje" => "Error al actualizar el producto: " . $conn->error]);
-            }
-            break;
+        if ($conn->query($sql) === TRUE) {
+            echo json_encode(["estado" => "éxito", "mensaje" => "Producto actualizado correctamente."]);
+        } else {
+            echo json_encode(["estado" => "error", "mensaje" => "Error al actualizar el producto: " . $conn->error]);
+        }
+        break;
+    
     
         case 'eliminar':
             $id_producto = $_POST['id'];

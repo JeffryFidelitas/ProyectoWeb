@@ -9,6 +9,8 @@ CREATE TABLE productos (
   FOREIGN KEY (id_productor) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
+ALTER TABLE productos
+ADD COLUMN activo BOOLEAN DEFAULT TRUE;
 
 INSERT INTO `productos` (`nombre`, `descripcion`, `precio`, `cantidad_disponible`, `foto`, `id_productor`) VALUES
 ('Tomate Orgánico', 'Tomate fresco cultivado sin pesticidas.', 2.50, 100, 'https://cdn.pixabay.com/photo/2016/03/26/16/44/tomatoes-1280859_640.jpg', 2),
