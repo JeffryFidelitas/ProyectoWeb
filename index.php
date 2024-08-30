@@ -21,6 +21,11 @@
                 <li><a href="productos">Productos</a></li>
                 <li><a href="servicios">Servicios</a></li>
                 <li><a href="nosotros#contacto">Contacto</a></li>
+
+                <?php if ($isLoggedIn): ?>
+                    <li><a href="facturas.php">Facturas</a></li>
+                <?php endif; ?>
+                
             </ul>
 
             <div class="nav-buttons">
