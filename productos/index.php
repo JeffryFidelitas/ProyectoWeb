@@ -8,13 +8,8 @@ $isLoggedIn = isset($_SESSION['usuario_id']);
 $usuarioRol = $_SESSION['role'] ?? '';
 $accion = $_POST['accion'] ?? '';
 $usuarioId = $_SESSION['usuario_id'] ?? '';
-$mensaje = $_SESSION['mensaje'] ?? ''; // Obtener mensaje
-
-// Registrar el ID del usuario para depuración en la consola del navegador
-echo "<script>console.log('ID del usuario: " . $usuarioId . "');</script>";
 
 if (!$isLoggedIn) {
-    $_SESSION['mensaje'] = 'Debes iniciar sesión para acceder a esta página.';
     header('Location: ../ingresar.php');
     exit();
 }
@@ -98,6 +93,14 @@ $result = $conn->query($sql_productos);
     <h2 class="text-center">Productos del Mercado Orgánico</h2>
     <p class="text-center">Nuestros productos son de agricultores costarricenses comprometidos con la producción sostenible y orgánica. Descubre la variedad de productos frescos y saludables que ofrecemos.</p>
     <a href="../carrito" id="carrito">🛒 Carrito</a>
+
+    <!-- Mostrar mensaje de éxito o error -->
+    <?php if (isset($_SESSION['mensaje'])): ?>
+    <div class="alert alert-info text-center">
+        <?php echo $_SESSION['mensaje']; unset($_SESSION['mensaje']); ?>
+    </div>
+    <?php endif; ?>
+
 
     <!-- Barra Busqueda -->
     <div class="d-flex justify-content-end mb-3">
@@ -268,13 +271,13 @@ $result = $conn->query($sql_productos);
     </div>
 
 </div>
-
-</body>
-</html>
-
 <footer> 
     &copy; 2024 Orgánico CR. Todos los derechos reservados. 
 </footer>
+</body>
+</html>
+
+
 
 <script>
     // Cargar datos en el modal de edición
@@ -313,7 +316,6 @@ $result = $conn->query($sql_productos);
             contentType: false,
             processData: false,
             success: function (response) {
-                alert(response);
                 location.reload();
             }
         });
@@ -330,7 +332,6 @@ $result = $conn->query($sql_productos);
             contentType: false,
             processData: false,
             success: function (response) {
-                alert(response);
                 location.reload();
             }
         });
@@ -345,7 +346,6 @@ $result = $conn->query($sql_productos);
             type: 'POST',
             data: formData,
             success: function (response) {
-                alert(response);
                 location.reload();
             }
         });

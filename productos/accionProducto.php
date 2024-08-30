@@ -1,12 +1,10 @@
 <?php
 session_start();
-
-// Verificar si el usuario está autenticado
-$isLoggedIn = isset($_SESSION['usuario']);
-$usuarioId = $_SESSION['usuario_id'] ?? null; // Aquí obtenemos el id del usuario
-$accion = $_POST['accion'] ?? '';
-
 include("../config/db/db.php");
+
+$isLoggedIn = isset($_SESSION['usuario_id']);
+$usuarioId = $_SESSION['usuario_id'] ?? null;
+$accion = $_POST['accion'] ?? '';
 
 if (!$isLoggedIn || !$usuarioId) {
     $_SESSION['mensaje'] = 'Debes iniciar sesión o crear una cuenta para acceder a esta página.';
@@ -21,28 +19,26 @@ switch ($accion) {
         $precio = $_POST['precio'];
         $cantidad_disponible = $_POST['cantidad_disponible'];
         $activo = isset($_POST['activo']) ? 1 : 0;
-    
-        // Manejo de imagen y conversión a base64
-        $foto_base64 = '';
+
         if (!empty($_FILES['foto']['tmp_name'])) {
             $foto_info = getimagesize($_FILES['foto']['tmp_name']);
             $foto_tipo = $foto_info['mime'];
             $foto_contenido = file_get_contents($_FILES['foto']['tmp_name']);
             $foto_base64 = 'data:' . $foto_tipo . ';base64,' . base64_encode($foto_contenido);
         } else {
-            die(json_encode(["estado" => "error", "mensaje" => "No se ha proporcionado una imagen."]));
+            $_SESSION['mensaje'] = "No se ha proporcionado una imagen.";
         }
-    
+
         $sql = "INSERT INTO productos (nombre, descripcion, precio, cantidad_disponible, foto, activo, id_productor) 
-                VALUES ('$nombre', '$descripcion', '$precio', '$cantidad_disponible', '$foto_base64', '$activo', '$_SESSION[usuario_id]')";
-    
+                VALUES ('$nombre', '$descripcion', '$precio', '$cantidad_disponible', '$foto_base64', '$activo', '$usuarioId')";
+
         if ($conn->query($sql) === TRUE) {
-            echo json_encode(["estado" => "éxito", "mensaje" => "Producto agregado correctamente."]);
+            $_SESSION['mensaje'] = "Producto agregado correctamente.";
         } else {
-            echo json_encode(["estado" => "error", "mensaje" => "Error al agregar el producto: " . $conn->error]);
+            $_SESSION['mensaje'] = "Error al agregar el producto: " . $conn->error;
         }
         break;
-    
+
     case 'actualizar':
         $id_producto = $_POST['id'];
         $nombre = $_POST['nombre'] ?? null;
@@ -50,14 +46,13 @@ switch ($accion) {
         $precio = $_POST['precio'] ?? null;
         $cantidad_disponible = $_POST['cantidad_disponible'] ?? null;
         $activo = isset($_POST['activo']) ? 1 : 0;
-    
-        // Verificar si se subió una nueva imagen y manejarla igual que en 'crear'
+
         if (!empty($_FILES['foto']['tmp_name'])) {
             $foto_info = getimagesize($_FILES['foto']['tmp_name']);
             $foto_tipo = $foto_info['mime'];
             $foto_contenido = file_get_contents($_FILES['foto']['tmp_name']);
             $foto_base64 = 'data:' . $foto_tipo . ';base64,' . base64_encode($foto_contenido);
-    
+
             $sql = "UPDATE productos SET 
                     nombre = IFNULL('$nombre', nombre), 
                     descripcion = IFNULL('$descripcion', descripcion), 
@@ -75,30 +70,30 @@ switch ($accion) {
                     activo = '$activo'
                     WHERE id = '$id_producto'";
         }
-    
+
         if ($conn->query($sql) === TRUE) {
-            echo json_encode(["estado" => "éxito", "mensaje" => "Producto actualizado correctamente."]);
+            $_SESSION['mensaje'] = "Producto actualizado correctamente.";
         } else {
-            echo json_encode(["estado" => "error", "mensaje" => "Error al actualizar el producto: " . $conn->error]);
+            $_SESSION['mensaje'] = "Error al actualizar el producto: " . $conn->error;
         }
         break;
-    
-    
-        case 'eliminar':
-            $id_producto = $_POST['id'];
-    
-            $sql = "DELETE FROM productos WHERE id = '$id_producto'";
-    
-            if ($conn->query($sql) === TRUE) {
-                echo json_encode(["estado" => "éxito", "mensaje" => "Producto eliminado correctamente."]);
-            } else {
-                echo json_encode(["estado" => "error", "mensaje" => "Error al eliminar el producto: " . $conn->error]);
-            }
-            break;
-    
-        default:
-            echo json_encode(["estado" => "error", "mensaje" => "Acción no válida."]);
-            break;
-    }
-    
-    $conn->close();
+
+    case 'eliminar':
+        $id_producto = $_POST['id'];
+
+        $sql = "DELETE FROM productos WHERE id = '$id_producto'";
+
+        if ($conn->query($sql) === TRUE) {
+            $_SESSION['mensaje'] = "Producto eliminado correctamente.";
+        } else {
+            $_SESSION['mensaje'] = "Error al eliminar el producto: " . $conn->error;
+        }
+        break;
+
+    default:
+        $_SESSION['mensaje'] = "Acción no válida.";
+        break;
+}
+
+$conn->close();
+exit();
