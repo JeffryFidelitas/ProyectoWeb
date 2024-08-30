@@ -63,7 +63,7 @@
             </div>
         </section>
         <section id="services" style="background: url('images/150.jpg') fixed; background-size: cover; background-color: #8abf76;">
-            <h3>Rich</h3>
+            <h3 style="color: transparent;">Rich</h3>
         </section>
     </main>
 
