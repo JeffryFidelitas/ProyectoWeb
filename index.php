@@ -26,7 +26,7 @@
             <div class="nav-buttons">
                 <?php if ($isLoggedIn): ?>
                     <?php if ($_SESSION['role'] == 'admin'): ?>
-                        <a class="btn btn-outline-light" href="index">Admin Dashboard</a>
+                        <a class="btn btn-outline-light" href="administrador/admin_dashboard.php">Admin Dashboard</a>
                     <?php endif; ?>
                     <a class="btn btn-outline-light" href="logout.php">Cerrar Sesión</a>
                 <?php else: ?>
