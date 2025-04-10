@@ -28,7 +28,7 @@
                             <a class="nav-link" href="../" style="color: white;">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../nosotros" style="color: white;">Nosotros</a>
+                            <a class="nav-link" href="index_category.php" style="color: white;">Nosotros</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="../productos" style="color: white;">Productos</a>
@@ -43,9 +43,9 @@
                     <div class="d-flex">
                         <?php if ($isLoggedIn): ?>
                             <a class="btn btn-outline-light mx-2" href="../perfil">Perfil</a>
-                            <a class="btn btn-light mx-2" href="../logout.php">Cerrar Sesión</a>
+                            <a class="btn btn-light mx-2" href="../index_category.php">Cerrar Sesión</a>
                         <?php else: ?>
-                            <a class="btn btn-outline-light mx-2" href="../ingresar.php">Iniciar Sesión</a>
+                            <a class="btn btn-outline-light mx-2" href="../index_category.php">>Iniciar Sesión</a>
                             <a class="btn btn-light mx-2" href="../registro.php">Registrarte</a>
                         <?php endif; ?>
                     </div>

@@ -4,10 +4,10 @@ ini_set('display_errors', 1);
 
 $servername = "localhost";
 $username = "root";
-$password = ""; //Cambien esto segun sus contraseñas
-$database = "organicocr";
+$password = "123456c"; //Cambien esto segun sus contraseñas
+$database = "proyecto";
 
-$conn = new mysqli($servername, $username, $password, $database, 3307); //Cambien el puerto según lo que use su compu
+$conn = new mysqli($servername, $username, $password, $database); //Cambien el puerto según lo que use su compu
 
 // Verificar la conexión y que no salga en pantalla 
 if ($conn->connect_error) {
