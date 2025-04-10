@@ -10,7 +10,7 @@
    
 
     <header>
-        <h1>GrowSync</h1>
+        <h1>Vivero La Reina</h1>
         <nav>
             <ul>
                 <li><a href="#">Inicio</a></li>
@@ -36,19 +36,19 @@
     </header>
 
     <main>
-        <section class="nosotros" style="background: url('images/150.jpg') fixed; background-size: cover; background-color: #F5EEDC;">
-            <h2>Bienvenidos a nuestra tienda de productos orgánicos</h2>
+        <section class="nosotros" style="background: url('images/150.jpg') fixed; background-size: cover;">
+            <h2>Bienvenidos a nuestro vivero</h2>
         </section>
-        <section id="catalogo" style="background: url('images/15.jpg') fixed; background-size: cover; background-color: #8abf76;">
+        <section id="catalogo" style="background: url('images/15.jpg')">
             <h2 style="text-align: left;">Noticias</h2>
             <div class="service-container">
                 <div class="service-box">
-                    <img src="./images/157.jpg" alt="Salud">
-                    <h3>Salud</h3>
-                    <p>Los productos orgánicos se cultivan sin el uso de pesticidas sintéticos y fertilizantes químicos.</p> 
+                    <img src="./images/102.jpg" alt="Salud">
+                    <h3>Plantas ornamentales</h3>
+                    <p> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque</p> 
                 </div>
                 <div class="service-box">
-                    <img src="./images/152.png" alt="Medio Ambiente">
+                    <img src="./images/103.jpg" alt="Medio Ambiente">
                     <h3>Medio Ambiente</h3>
                     <p>La ausencia de pesticidas químicos favorece la biodiversidad permitiendo que una variedad de organismos beneficiosos prosperen.</p>
                 </div>
@@ -65,7 +65,7 @@
     </main>
 
     <footer> 
-        &copy; 2024 Orgánico CR. Todos los derechos reservados. 
+        &copy; 2024 Vivero la Reina S.A. Todos los derechos reservados. 
     </footer>
 
 </body>

@@ -63,14 +63,14 @@
                     <p>En Órganico CR, nuestra misión es promover la agricultura sostenible y apoyar a los pequeños productores locales de Costa Rica. Buscamos ofrecer una plataforma que facilite la conexión directa entre los agricultores y los consumidores, eliminando intermediarios y garantizando productos frescos y orgánicos de alta calidad.</p>
 
                     <h3>Nuestra Visión</h3>
-                    <p>Aspiramos a ser la principal plataforma digital para productos orgánicos y locales en Costa Rica, contribuyendo a una comunidad más saludable y un entorno más sostenible. Queremos que cada hogar en Costa Rica tenga acceso a alimentos frescos, orgánicos y de alta calidad, mientras apoyamos el crecimiento y la prosperidad de nuestros agricultores locales.</p>
+                    <p></p>
 
                     <h3>Valores</h3>
                     <ul>
-                        <li><strong>Sostenibilidad:</strong> Promovemos prácticas agrícolas responsables que protegen el medio ambiente.</li>
-                        <li><strong>Calidad:</strong> Nos comprometemos a ofrecer productos frescos y de alta calidad.</li>
-                        <li><strong>Transparencia:</strong> Fomentamos la trazabilidad y la honestidad en todas las transacciones.</li>
-                        <li><strong>Compromiso:</strong> Apoyamos a los productores locales y trabajamos para fortalecer la economía regional.</li>
+                        <li><strong>Sostenibilidad:</strong> .</li>
+                        <li><strong>Calidad:</strong> .</li>
+                        <li><strong>Transparencia:</strong> </li>
+                        <li><strong>Compromiso:</strong> </li>
                     </ul>
 
                     <h3>Conoce a Nuestro Equipo</h3>
@@ -78,7 +78,7 @@
                         <div class="team-member">
                             <img src="../images/persona1.jpg" alt="Foto de Juan Pérez">
                             <h4>Juan Pérez</h4>
-                            <p><strong>Fundador y CEO</strong><br>Juan es el corazón detrás de Órganico CR. Con una profunda pasión por la agricultura sostenible, su visión es transformar el mercado de alimentos en Costa Rica.</p>
+                            <p><strong>Fundador y CEO</strong><br>Jn </p>
                         </div>
                         <div class="team-member">
                             <img src="../images/persona2.jpg" alt="Foto de María López">
